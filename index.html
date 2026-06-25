@@ -185,11 +185,11 @@ img, button, input{ font-family:inherit; }
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, query, where, onSnapshot, orderBy, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, query, orderBy, getDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey:            "AIzaSyBFV9-H2lzGHx5NbbJ09lcc2ZSGJeyfHR0",
-  authDomain:        "abdarzak2008.github.io",
+  authDomain:        "restaurant-asala-8902f.firebaseapp.com",
   projectId:         "restaurant-asala-8902f",
   storageBucket:     "restaurant-asala-8902f.firebasestorage.app",
   messagingSenderId: "177782596238",
@@ -222,8 +222,8 @@ onSnapshot(query(collection(db, "categories"), orderBy("createdAt", "asc")), sna
 });
 
 /* ── Realtime: products ── */
-onSnapshot(query(collection(db, "products"), where("status", "==", "active"), orderBy("createdAt", "asc")), snap => {
-  products = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+onSnapshot(collection(db, "products"), snap => {
+  products = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(p => p.status === "active");
   renderMenu();
 });
 
